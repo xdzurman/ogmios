@@ -37,6 +37,10 @@ export const delegationsAndRewards = (
     }
   }, {
     handler: (response, resolve, reject) => {
+      if (!response.result) {
+        return reject(new UnknownResultError(response.result))
+      }
+
       if (response.result === 'QueryUnavailableInCurrentEra') {
         return reject(new QueryUnavailableInCurrentEraError('delegationsAndRewards'))
       } else if (isEraMismatch(response.result)) {
